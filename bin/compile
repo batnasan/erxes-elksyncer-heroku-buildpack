@@ -11,7 +11,7 @@ bp_dir=$(dirname $(dirname $0))
 proc_file="Procfile"
 
 configure_elk_syncer() {
-cat > $build_dir/elkSyncer/mongo-connector-config.json << EOF
+cat > $build_dir/mongo-connector-config.json << EOF
 {
     "oplogFile": "$build_dir/oplog.timestamp",
     "noDump": false,
@@ -45,7 +45,7 @@ cat > $build_dir/elkSyncer/mongo-connector-config.json << EOF
 }
 EOF
     
-    echo "elkSyncer: cd $build_dir/elkSyncer && python main.py" > $proc_file
+    echo "elkSyncer: python main.py" > $proc_file
 }
 
 configure_elk_syncer
