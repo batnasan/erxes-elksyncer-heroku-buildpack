@@ -44,8 +44,9 @@ cat > $build_dir/mongo-connector-config.json << EOF
     ]
 }
 EOF
+    echo "-----> Created mongo-connector-config.json"
     
-    echo "elkSyncer: python main.py" > $proc_file
+    echo "elkSyncer: cd elkSyncer && python main.py" > $proc_file
 }
 
 configure_elk_syncer
