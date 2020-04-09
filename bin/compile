@@ -11,11 +11,11 @@ bp_dir=$(dirname $(dirname $0))
 proc_file="Procfile"
 
 configure_elk_syncer() {
-    echo "elkSyncer: cd elkSyncer && python main.py" > $proc_file
+    #echo "elkSyncer: cd elkSyncer && python main.py" > $proc_file
     
 cat > $build_dir/mongo-connector-config.json << EOF
 {
-    "oplogFile": "$build_dir/oplog.timestamp",
+    "oplogFile": "oplog.timestamp",
     "noDump": false,
     "batchSize": 5000,
     "verbosity": 3,
