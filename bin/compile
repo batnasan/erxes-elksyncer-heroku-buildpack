@@ -11,6 +11,8 @@ bp_dir=$(dirname $(dirname $0))
 proc_file="Procfile"
 
 configure_elk_syncer() {
+    echo "elkSyncer: cd elkSyncer && python main.py" > $proc_file
+    
 cat > $build_dir/mongo-connector-config.json << EOF
 {
     "oplogFile": "$build_dir/oplog.timestamp",
@@ -46,7 +48,17 @@ cat > $build_dir/mongo-connector-config.json << EOF
 EOF
     echo "-----> Created mongo-connector-config.json"
     
-    echo "elkSyncer: cd elkSyncer && python main.py" > $proc_file
+cat > $build_dir/runtime.txt << EOF
+python-3.7.6
+EOF
+    
+cat > $build_dir/requirements.txt << EOF
+mongo-connector==3.1.1
+elasticsearch==7.5.1
+elastic2-doc-manager==1.0.0
+python-dotenv==0.11.0
+certifi==0.0.8
+EOF
 }
 
 configure_elk_syncer
