@@ -1,0 +1,54 @@
+#!/usr/bin/env bash
+# bin/compile <build-dir> <cache-dir> <env-dir>
+
+set -e
+
+build_dir=$1
+cache_dir=$2
+env_dir=$3
+bp_dir=$(dirname $(dirname $0))
+
+proc_file="Procfile"
+
+configure_elk_syncer() {
+cat > $build_dir/mongo-connector-config.json << EOF
+{
+    "oplogFile": "$build_dir/oplog.timestamp",
+    "noDump": false,
+    "batchSize": 5000,
+    "verbosity": 3,
+    "continueOnError": true,
+    "logging": {
+        "type": "stream"
+    },
+    "namespaces": {
+        "erxes*.customers": {
+            "rename": "erxes*__customers._doc",
+            "excludeFields": ["urlVisits", "messengerData"]
+        },
+        "erxes*.companies": {
+            "rename": "erxes*__companies._doc"
+        }
+    },
+    "docManagers": [
+        {
+            "docManager": "elastic2_doc_manager",
+            "bulkSize": 10,
+            "uniqueKey": "_id",
+            "args": {
+                "clientOptions": {
+                    "timeout": 5000
+                }
+            }
+        }
+    ]
+}
+EOF
+    
+    echo "elkSyncer: cd elkSyncer && python main.py" > $proc_file
+}
+
+configure_elk_syncer
+echo "-----> Done elk syncer"
+
+exit 0
