@@ -13,7 +13,7 @@ proc_file="Procfile"
 configure_elk_syncer() {
     #echo "elkSyncer: cd elkSyncer && python main.py" > $proc_file
     
-    touch /app/elkSyncer/oplog.timestamp
+    touch $build_dir/oplog.timestamp
 cat > $build_dir/mongo-connector-config.json << EOF
 {
     "oplogFile": "/app/elkSyncer/oplog.timestamp",
