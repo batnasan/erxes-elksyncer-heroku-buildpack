@@ -15,7 +15,7 @@ configure_elk_syncer() {
     
 cat > $build_dir/mongo-connector-config.json << EOF
 {
-    "oplogFile": "$build_dir/oplog.timestamp",
+    "oplogFile": "/app/elkSyncer/oplog.timestamp",
     "noDump": false,
     "batchSize": 5000,
     "verbosity": 3,
